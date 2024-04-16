@@ -4,6 +4,7 @@ const jwt = require("jsonwebtoken");
 
 // Register logic
 exports.register = async (req, res) => {
+  console.log("inside register method");
   // accepts the data from client
   const { username, email, password } = req.body;
   console.log(username, email, password);

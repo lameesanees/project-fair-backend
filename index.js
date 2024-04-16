@@ -11,6 +11,7 @@ const cors = require('cors')
 const db = require ('./DB/connection')
 
 const router = require('./Routes/router')
+// const applicationMiddleware = require('./Middlewares/applicationMiddleware')
 
 //4. create an app using express.js
 const pfServer = express()
@@ -18,9 +19,11 @@ const pfServer = express()
 //5. use
 pfServer.use(cors())
 pfServer.use(express.json()) //Returns middleware that only parses json
+// pfServer.use(applicationMiddleware)
 
 // 9.
 pfServer.use(router)
+
 //6. port creation
 const PORT = 4000 || process.env.PORT
 
