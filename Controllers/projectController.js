@@ -31,19 +31,24 @@ exports.addProject = async (req, res) => {
   }
 };
 
-// 1. get a particular project details
-exports.getProject = async (req, res) => {
-  const userId = req.payload;
-  try {
-    const project = await projects.findOne({ userId });
-    if (!project) {
-      return res.status(404).json("Project not found");
-    }
-    res.status(200).json(project);
-  } catch (err) {
-    res.status(500).json({ message: err.message });
+//3 get particular project
+exports.getAprojects=async(req,res)=>{
+  //get user id
+  const userId=req.payload
+  console.log(userId);
+  try{
+       const Aproject = await projects.find({userId})
+       if(Aproject){
+          res.status(200).json(Aproject)
+       }
+       else{
+          res.status(401).json("cant find project")
+       }
   }
-};
+  catch(err){
+      res.status(401).json({message:err.message})
+  }
+}
 
 // 2. get 3 project details for home project
 exports.getHomeProject = async(req,res)=>{
@@ -64,14 +69,31 @@ exports.getHomeProject = async(req,res)=>{
 
 // 3. get all project details
 exports.getAllProjects = async (req, res) => {
-  console.log("Inside the get all projects method");
+
+const searchKey = req.query.search
+console.log(searchKey);
+// case sensitive
+const query={
+  title:{$regex:searchKey,$options:"i"}
+}
+console.log(query)
   try {
-    const allProjects = await projects.find()
+    const allProjects = await projects.find(query)
     if (!allProjects || allProjects.length === 0) {
       return res.status(404).json("No projects found");
     }
     res.status(200).json(allProjects);
   } catch (err) {
     res.status(500).json({ message: err.message });
+  }
+};
+
+exports.deleteUserProject = async (req, res) => {
+  const { pid } = req.params; // get project id
+  try {
+    const deleteUserProject = await projects.findOneAndDelete({ _id: pid });
+    res.status(200).json(deleteUserProject);
+  } catch (err) {
+    res.status(401).json({ message: err.message });
   }
 };

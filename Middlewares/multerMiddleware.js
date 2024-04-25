@@ -12,15 +12,18 @@ const storage = multer.diskStorage({
   },
 });
 const fileFilter = (req, file, callback) => {
-  if (file.mimetype === "image/png" ||file.mimetype === "image/jpeg" ||file.mimetype === "image/jpg")
-   {
+  if (
+    file.mimetype === "image/png" ||
+    file.mimetype === "image/jpeg" ||
+    file.mimetype === "image/jpg"
+  ) {
     callback(null, true);
   } else {
     callback(null, false);
     return callback(
-      new Error("Please upload following image extension(png,jpeg,jpg")
+      new Error("Please upload following image extension(png,jpeg,jpg)")
     );
   }
-};
+}  
 const multerConfig = multer({storage,fileFilter});
 module.exports = multerConfig;

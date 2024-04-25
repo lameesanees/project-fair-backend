@@ -19,13 +19,15 @@ router.post("/login",userController.login)
 router.post("/project/add-project",jwtMiddleware,multerConfig.single('projectImage'), projectController.addProject)
 
 // 6. get project
-router.get('/projects/get-project',jwtMiddleware, projectController.getProject);
+router.get('/project/get-auser-project',jwtMiddleware,projectController.getAprojects)
 
 // 7. get 3 project details in home
 router.get('/projects/home-project',projectController.getHomeProject)
 
 // 8. get all project
 router.get('/projects/get-all-project', jwtMiddleware, projectController.getAllProjects);
+
+
 
 
 module.exports=router

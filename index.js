@@ -24,6 +24,9 @@ pfServer.use(express.json()) //Returns middleware that only parses json
 // 9.
 pfServer.use(router)
 
+// to exports the images from backend to frontend 
+pfServer.use('/uploads',express.static('./uploads'))
+
 //6. port creation
 const PORT = 4000 || process.env.PORT
 
